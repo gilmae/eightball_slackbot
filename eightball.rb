@@ -8,10 +8,11 @@ require 'yaml'
 
 logger = Logger.new("./magic_eightball.log")
 
-config = YAML.load(File.open("./.config") {|f| f.read})
+eightball_config = YAML.load(File.open("./.config") {|f| f.read})
+logger.debug(eightball_config[:token])
 
 Slack.configure do |config|
-  config.token = config[:token]
+  config.token = eightball_config[:token]
 end
 
 auth = Slack.auth_test
@@ -36,7 +37,7 @@ client.on :message do |data|
 
       Slack.chat_postMessage channel: data['channel'],
         text: ":8ball: says... #{response}",
-        username: config[:username]
+        username: eightball_config[:username]
     end
   end
 
