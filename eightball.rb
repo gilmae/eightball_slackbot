@@ -9,7 +9,6 @@ require 'yaml'
 logger = Logger.new("./magic_eightball.log")
 
 eightball_config = YAML.load(File.open("./.config") {|f| f.read})
-logger.debug(eightball_config[:token])
 
 Slack.configure do |config|
   config.token = eightball_config[:token]
