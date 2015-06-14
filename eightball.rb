@@ -27,7 +27,7 @@ client.on :message do |data|
   text = data['text']
   logger.info("Message received: #{text} in #{data['channel']}")
 
-  if text[-1,1] == '?'
+  if text != "" && text[-1,1] == '?'
     logger.info("Question detected because it ended with a '?'")
 
     if rand(10) < 2
