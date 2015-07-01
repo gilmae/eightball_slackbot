@@ -21,9 +21,22 @@ client = Slack.realtime
 
 client.on :hello do
   logger.info "logged in"
+
+  keep_alive = Thread.new do
+     while true
+       logger.debug "Checking connection at #{Time.now}"
+       auth = Slack.auth_test
+       fail auth['error'] unless auth['ok']
+       sleep 3600
+     end
+  end
 end
 
 client.on :message do |data|
+
+
+
+
   text = data['text']
   logger.info("Message received: #{text} in #{data['channel']}")
 
